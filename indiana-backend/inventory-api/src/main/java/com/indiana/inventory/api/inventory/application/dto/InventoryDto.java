@@ -10,10 +10,10 @@ import lombok.Getter;
 public class InventoryDto {
 
   private final Long id;
-  private final Integer quantityAvailable;
-  private final Integer minimumStockLevel;
-  private final Integer maximumStockLevel;
-  private final Integer reorderPoint;
+  private final Long quantityAvailable;
+  private final Long minimumStockLevel;
+  private final Long maximumStockLevel;
+  private final Long reorderPoint;
   private final Long productId;
   private final Long warehouseId;
 }

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @AllArgsConstructor
 @Component
-public class CreateOrUpdateInventoryUseCase {
+public class SaveOrUpdateInventoryUseCase {
 
   private final InventoryRepository inventoryRepository;
   private final InventoryMapper inventoryMapper;

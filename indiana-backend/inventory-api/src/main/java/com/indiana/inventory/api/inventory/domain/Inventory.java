@@ -7,8 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
@@ -20,19 +21,21 @@ public class Inventory {
   @Column(name = "inv_id")
   private Long id;
   @Column(name = "inv_quantity_available")
-  private Integer quantityAvailable;
+  private Long quantityAvailable;
   @Column(name = "inv_minimum_stock_level")
-  private Integer minimumStockLevel;
+  private Long minimumStockLevel;
   @Column(name = "inv_maximum_stock_level")
-  private Integer maximumStockLevel;
+  private Long maximumStockLevel;
   @Column(name = "inv_reorder_point")
-  private Integer reorderPoint;
+  private Long reorderPoint;
   @Column(name = "inv_prod_id")
   private Long productId;
   @Column(name = "inv_wah_id")
   private Long warehouseId;
   @Column(name = "inv_created_at")
+  @CreationTimestamp
   private ZonedDateTime createdAt;
+  @UpdateTimestamp
   @Column(name = "inv_updated_at")
   private ZonedDateTime updatedAt;
 }

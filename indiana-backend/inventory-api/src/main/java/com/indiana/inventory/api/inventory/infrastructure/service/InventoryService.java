@@ -1,7 +1,7 @@
 package com.indiana.inventory.api.inventory.infrastructure.service;
 
 import com.indiana.inventory.api.inventory.application.exception.InventoryException;
-import com.indiana.inventory.api.inventory.application.usecase.CreateOrUpdateInventoryUseCase;
+import com.indiana.inventory.api.inventory.application.usecase.SaveOrUpdateInventoryUseCase;
 import com.indiana.inventory.api.inventory.application.dto.InventoryDto;
 import com.indiana.inventory.api.inventory.infrastructure.exception.InventoryInfraException;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class InventoryService {
 
-  private final CreateOrUpdateInventoryUseCase createOrUpdateInventoryUseCase;
+  private final SaveOrUpdateInventoryUseCase saveOrUpdateInventoryUseCase;
 
   public InventoryDto createOrUpdateInventory(InventoryDto inventoryDto){
     try {
-      return createOrUpdateInventoryUseCase.execute(inventoryDto);
+      return saveOrUpdateInventoryUseCase.execute(inventoryDto);
     } catch (final InventoryException inventoryException) {
       throw new InventoryInfraException(inventoryException);
     }
