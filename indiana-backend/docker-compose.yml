@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - "9411:9411"
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+    ports:
+      - "3307:3306"
+    expose:
+      - 3307

@@ -1,0 +1,71 @@
+server:
+  servlet:
+    context-path: /
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){blue} %clr([%X{traceId:-},%X{spanId:-}]){cyan} %clr(${LOG_LEVEL_PATTERN:-%5p}) %m%n"
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - name: API Gateway Service
+        url: /v3/api-docs
+        primaryName: API Gateway Service
+      - name: Inventory Service
+        url: /inventory-service/v3/api-docs
+        primaryName: inventory-service
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials RETAIN_UNIQUE
+        - AddResponseHeader=Access-Control-Allow-Origin, "http://localhost:4200"
+        - AddResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
+        - AddResponseHeader=Access-Control-Allow-Headers, "*"
+        - AddResponseHeader=Access-Control-Allow-Credentials, "true"
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - "GET"
+              - "POST"
+              - "PUT"
+              - "DELETE"
+              - "OPTIONS"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+      routes:
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/inventories/** , /inventory-service/v3/api-docs
+          filters:
+            - StripPrefix=1
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

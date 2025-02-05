@@ -1,0 +1,51 @@
+server:
+  servlet:
+    context-path: /
+  port: 0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+  instance:
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){blue} %clr([%X{traceId:-},%X{spanId:-}]){cyan} %clr(${LOG_LEVEL_PATTERN:-%5p}) %m%n"
+
+spring:
+  application:
+    name: inventory-service
+  datasource:
+    url: jdbc:mysql://localhost:3307/indiana-db
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    baseline-version: 0
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+openapi:
+  service:
+    title: inventory-service doc
+    version: 1.0.0
+    url: http://localhost:8060
+
+springdoc:
+  api-docs:
+    path: /inventory-service/v3/api-docs
+  swagger-ui:
+    path: /inventory-service/swagger-ui.html
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+    paths-to-match: /inventories/**
