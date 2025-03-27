@@ -1,0 +1,9 @@
+<div class="content">
+  <div class="text-2xl">View Product</div>
+  <div class="flex-col p-4 mt-3">
+    <indiana-backoffice-product-form #productForm [isReadonly]="true" [product]="productSignal()"></indiana-backoffice-product-form>
+    <div class="space-x-2 mt-4">
+      <button mat-button [disabled]="isLoadingSignal()" (click)="gotToList$.next()">Back to list</button>
+    </div>
+  </div>
+</div>

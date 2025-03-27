@@ -1,0 +1,12 @@
+<div class="flex flex-row justify-between">
+  <div class="text-2xl">Product List</div>
+  <button mat-flat-button color="primary" [routerLink]="['./create']">Create</button>
+</div>
+<div class="w-full pt-5">
+  <indiana-backoffice-product-list-table
+    [productList]="productListSignal()"
+    (productFilter)="onProductSelected($event)"
+    (searchQuery)="searchProduct($event)"
+  >
+  </indiana-backoffice-product-list-table>
+</div>

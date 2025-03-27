@@ -1,0 +1,13 @@
+<div class="flex flex-row justify-between">
+  <div class="text-2xl">Location List</div>
+  <button mat-flat-button color="primary" (click)="showCreateModal()">Create</button>
+</div>
+<div class="w-full pt-5">
+  <indiana-backoffice-location-list-table
+    [listItem]="listSignal()"
+    (filterEvent)="onSelected($event)"
+    (editEvent)="showEditModal($event)"
+    (viewEvent)="showViewModal($event)"
+  >
+  </indiana-backoffice-location-list-table>
+</div>

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Create Location</h1>
+<div mat-dialog-content>
+  <div class="flex">
+    <div class="w-full">
+      <indiana-backoffice-location-form #form></indiana-backoffice-location-form>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="space-x-2 mt-4">
+    <button mat-flat-button color="primary" (click)="create$.next()"
+            [disabled]="isLoadingSignal()">
+      Save
+    </button>
+    <button mat-button [disabled]="isLoadingSignal()" (click)="cancel()">Cancel</button>
+  </div>
+</div>

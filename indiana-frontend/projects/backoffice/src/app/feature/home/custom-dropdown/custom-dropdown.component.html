@@ -1,0 +1,51 @@
+<div class="dropdown">
+  <input type="text" class="dropdown-input" (click)="toggleDropdown()" readonly
+         [value]="'Selected: ' + selectedCount" />
+
+  <div *ngIf="isOpen" class="dropdown-menu">
+    <div class="dropdown-header">
+      <input type="text" class="search-input" [(ngModel)]="searchQuery"
+             (input)="filterItems()" placeholder="Search..." />
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="selection" value="Standard"
+                 [checked]="radioSelection === 'Standard'"
+                 (change)="onRadioChange('Standard')" />
+          Standard
+        </label>
+        <label>
+          <input type="radio" name="selection" value="Granular"
+                 [checked]="radioSelection === 'Granular'"
+                 (change)="onRadioChange('Granular')" />
+          Granular
+        </label>
+      </div>
+    </div>
+
+    <div class="selection-options">
+      <button (click)="selectAll()">All</button>
+      <button (click)="selectNone()">None</button>
+    </div>
+
+    <div class="checkbox-list">
+      <div class="checkbox-column">
+        <div *ngFor="let item of filteredItems.slice(0, filteredItems.length / 2)" class="checkbox-item">
+          <label>
+            <input type="checkbox" [checked]="selectedItems.has(item.key)"
+                   (change)="toggleItemSelection(item.key)" />
+            {{ item.value }}
+          </label>
+        </div>
+      </div>
+      <div class="checkbox-column">
+        <div *ngFor="let item of filteredItems.slice(filteredItems.length / 2)" class="checkbox-item">
+          <label>
+            <input type="checkbox" [checked]="selectedItems.has(item.key)"
+                   (change)="toggleItemSelection(item.key)" />
+            {{ item.value }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

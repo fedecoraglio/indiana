@@ -1,0 +1,63 @@
+<div class="mat-elevation-z8">
+  <div class="w-full">
+    <mat-form-field class="w-full">
+      <mat-label>Filter</mat-label>
+      <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
+             placeholder="Search by id, code, name or barcode "/>
+    </mat-form-field>
+  </div>
+  <table mat-table matSort [dataSource]="(productList$ | async)?.content ?? []"
+         class="w-full tbl rounded-lg">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-1/12">ID</th>
+      <td mat-cell *matCellDef="let product" [title]="product.id"> {{ product.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-5/12"> Name</th>
+      <td mat-cell *matCellDef="let product" [title]="product.name"
+          class="whitespace-normal">{{ product.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-2/12">Code</th>
+      <td mat-cell *matCellDef="let product" [title]="product.code"> {{ product.code }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="barcode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-2/12">
+        Barcode
+      </th>
+      <td mat-cell *matCellDef="let product" [title]="product.barcode"
+          class="whitespace-normal">{{ product.barcode }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-2/12">Actions</th>
+      <td mat-cell *matCellDef="let product" [title]="product.barcode">
+        <button mat-icon-button [routerLink]="['./view', product.id]">
+          <mat-icon class="icon-size-5 text-blue-900" fontIcon="visibility"></mat-icon>
+        </button>
+        <button mat-icon-button [routerLink]="['./edit', product.id]">
+          <mat-icon class="icon-size-5 text-blue-900" fontIcon="edit"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row text-center" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+        There are not products
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions"
+                 [length]="(productList$ | async)?.totalElements ?? 0" [pageSize]="defaultPageSize"
+                 aria-label="Select page">
+  </mat-paginator>
+</div>

@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup" class="mb-4">
+  <div class="flex flex-row space-x-5">
+    <mat-form-field class="w-5/12" floatLabel="always">
+      <mat-label>Name</mat-label>
+      <input data-testid="package_name" matInput [formControlName]="fields.Name"/>
+      <mat-error>Value is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-7/12" floatLabel="always">
+      <mat-label>Description</mat-label>
+      <textarea [formControlName]="fields.Description" matInput></textarea>
+    </mat-form-field>
+  </div>
+  <div class="flex flex-row space-x-5">
+    <mat-form-field class="w-5/12" floatLabel="always">
+      <mat-label>Code</mat-label>
+      <input matInput [formControlName]="fields.Code" />
+    </mat-form-field>
+
+    <mat-form-field class="w-7/12" floatLabel="always">
+      <mat-label>Barcode</mat-label>
+      <input matInput [formControlName]="fields.Barcode"/>
+    </mat-form-field>
+  </div>
+</form>

@@ -1,0 +1,13 @@
+<div class="content">
+  <div class="text-2xl">Edit Product</div>
+  <div class="flex-col p-4 mt-3">
+    <indiana-backoffice-product-form #productForm [product]="productSignal()"></indiana-backoffice-product-form>
+    <div class="space-x-2 mt-4">
+      <button mat-flat-button color="primary" (click)="update$.next()"
+              [disabled]="isLoadingSignal()">
+        Update
+      </button>
+      <button mat-button [disabled]="isLoadingSignal()" (click)="gotToList$.next()">Cancel</button>
+    </div>
+  </div>
+</div>

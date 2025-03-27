@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>View Location</h1>
+<div mat-dialog-content>
+  <div class="flex">
+    <div class="w-full">
+      <indiana-backoffice-location-form #form [isReadonly]="true"
+                                        [location]="locationSignal()">
+      </indiana-backoffice-location-form>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="space-x-2 mt-4">
+    <button mat-button [disabled]="isLoadingSignal()" (click)="cancel()">Back to list</button>
+  </div>
+</div>
