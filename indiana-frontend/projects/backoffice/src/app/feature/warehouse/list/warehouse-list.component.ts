@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { LocationService } from '../../../core/service/location/location.service';
+import { WarehouseService } from '../../../core/service/warehouse/warehouse.service';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableModule } from '@angular/material/table';
@@ -11,20 +11,20 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { LocationListTableComponent } from './list-table/location-list-table.component';
-import { LocationFilterDto } from '../dto/location-filter.dto';
+import { WarehouseListTableComponent } from './list-table/warehouse-list-table.component';
+import { WarehouseFilterDto } from '../dto/warehouse-filter.dto';
 import { MatDialog } from '@angular/material/dialog';
-import { LocationCreateComponent } from '../create/location-create.component';
-import { LocationEditComponent } from '../edit/location-edit.component';
-import { LocationViewComponent } from '../view/location-view.component';
+import { WarehouseCreateComponent } from '../create/warehouse-create.component';
+import { WarehouseEditComponent } from '../edit/warehouse-edit.component';
+import { WarehouseViewComponent } from '../view/warehouse-view.component';
 
 @Component({
-  selector: 'indiana-backoffice-location-list',
+  selector: 'indiana-backoffice-warehouse-list',
   standalone: true,
   imports: [
     MatButtonModule,
     MatIconModule,
-    LocationListTableComponent,
+    WarehouseListTableComponent,
     MatTableModule,
     MatSortModule,
     MatTooltipModule,
@@ -33,14 +33,14 @@ import { LocationViewComponent } from '../view/location-view.component';
     MatPaginatorModule,
     MatSortModule,
   ],
-  templateUrl: './location-list.component.html',
-  styleUrl: './location-list.component.scss',
+  templateUrl: './warehouse-list.component.html',
+  styleUrl: './warehouse-list.component.scss',
 })
-export class LocationListComponent implements OnDestroy {
+export class WarehouseListComponent implements OnDestroy {
   private readonly destroyed$: Subject<void> = new Subject<void>();
-  private readonly locationService = inject(LocationService);
-  private readonly showList$ = new Subject<LocationFilterDto | null>();
-  private readonly defaultFilter: LocationFilterDto = {
+  private readonly locationService = inject(WarehouseService);
+  private readonly showList$ = new Subject<WarehouseFilterDto | null>();
+  private readonly defaultFilter: WarehouseFilterDto = {
     page: 0,
     pageSize: 30,
     sortBy: 'id',
@@ -69,13 +69,13 @@ export class LocationListComponent implements OnDestroy {
 
   onSelected($event: unknown) {
     this.showList$.next(
-      ($event as LocationFilterDto | null) ?? this.defaultFilter,
+      ($event as WarehouseFilterDto | null) ?? this.defaultFilter,
     );
   }
 
   showCreateModal() {
     this.dialog
-      .open(LocationCreateComponent, {
+      .open(WarehouseCreateComponent, {
         ...this.defaultModalOption,
       })
       .afterClosed()
@@ -87,7 +87,7 @@ export class LocationListComponent implements OnDestroy {
 
   showEditModal(id: string) {
     this.dialog
-      .open(LocationEditComponent, {
+      .open(WarehouseEditComponent, {
         ...this.defaultModalOption,
         data: { id },
       })
@@ -100,7 +100,7 @@ export class LocationListComponent implements OnDestroy {
 
   showViewModal(id: string) {
     this.dialog
-    .open(LocationViewComponent, {
+    .open(WarehouseViewComponent, {
       ...this.defaultModalOption,
       data: { id },
     })

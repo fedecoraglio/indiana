@@ -1,0 +1,17 @@
+<form [formGroup]="formGroup" class="mb-4 mt-4">
+  <div class="flex flex-col space-y-6">
+    <mat-form-field class="w-full" floatLabel="always">
+      <mat-label>Name</mat-label>
+      <input matInput [formControlName]="fields.Name" />
+      <mat-error>Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Location</mat-label>
+      <mat-select [formControlName]="fields.Location">
+        @for (dto of locationListSignal().content; track dto.id) {
+          <mat-option [value]="dto.id">{{dto.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>

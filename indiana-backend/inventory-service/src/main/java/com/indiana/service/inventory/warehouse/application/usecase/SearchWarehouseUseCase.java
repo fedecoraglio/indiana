@@ -33,7 +33,7 @@ public class SearchWarehouseUseCase {
       } else {
         page = warehousePageableRepository.findByNameIgnoreCaseContaining(query, pageable);
       }
-      return page.map(warehouseMapper::toLocationDto);
+      return page.map(warehouseMapper::toDto);
     } catch (final WarehouseException e) {
       log.error("Error getting location", e);
       throw e;

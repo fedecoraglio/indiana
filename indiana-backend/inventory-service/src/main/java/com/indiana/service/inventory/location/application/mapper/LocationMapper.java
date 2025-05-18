@@ -2,12 +2,13 @@ package com.indiana.service.inventory.location.application.mapper;
 
 import com.indiana.service.inventory.location.application.dto.LocationDto;
 import com.indiana.service.inventory.location.domain.Location;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LocationMapper {
 
-  public LocationDto toLocationDto(final Location location) {
+  public LocationDto toDto(final Location location) {
     if (location == null) {
       return null;
     }
@@ -15,6 +16,13 @@ public class LocationMapper {
         .name(location.getName())
         .address(location.getAddress())
         .build();
+  }
+
+  public List<LocationDto> toDto(final List<Location> list) {
+    if (list == null) {
+      return null;
+    }
+    return list.stream().map(this::toDto).toList();
   }
 
   public Location toLocation(final LocationDto locationDto) {

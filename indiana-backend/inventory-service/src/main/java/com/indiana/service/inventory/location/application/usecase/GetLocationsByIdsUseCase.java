@@ -1,25 +1,20 @@
 package com.indiana.service.inventory.location.application.usecase;
 
 import com.indiana.service.inventory.location.application.dto.LocationDto;
-import com.indiana.service.inventory.location.application.exception.LocationException;
-import com.indiana.service.inventory.location.application.exception.LocationException.LocationExceptionType;
 import com.indiana.service.inventory.location.application.mapper.LocationMapper;
 import com.indiana.service.inventory.location.domain.LocationRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class GetLocationByIdUseCase {
+public class GetLocationsByIdsUseCase {
 
   private final LocationRepository locationRepository;
   private final LocationMapper locationMapper;
 
-  public LocationDto execute(final Long id) {
-    try {
-      return locationMapper.toDto(locationRepository.findById(id).orElse(null));
-    } catch (final Exception e) {
-      throw new LocationException(LocationExceptionType.LOCATION_UNEXPECTED_ERROR, e);
-    }
+  public List<LocationDto> execute(final List<Long> ids) {
+    return locationMapper.toDto(locationRepository.findAllByIdIn(ids));
   }
 }

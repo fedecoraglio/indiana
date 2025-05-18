@@ -14,10 +14,10 @@ public class SaveOrUpdateWarehousePolicy {
     if (dto == null) {
       throw new WarehouseException(WarehouseExceptionType.WAREHOUSE_CANNOT_BE_NULL);
     }
-    if ("".equals(dto.getName())) {
+    if ("".equals(dto.name())) {
       throw new WarehouseException(WarehouseExceptionType.WAREHOUSE_NAME_CANNOT_BE_NULL);
     }
-    if(dto.getLocationId() == null) {
+    if(dto.locationId() == null) {
       throw new WarehouseException(WarehouseExceptionType.WAREHOUSE_LOCATION_ID_CANNOT_BE_NULL);
     }
   }

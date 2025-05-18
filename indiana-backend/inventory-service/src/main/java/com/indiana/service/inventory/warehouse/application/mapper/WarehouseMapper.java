@@ -7,24 +7,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class WarehouseMapper {
 
-  public WarehouseDto toLocationDto(final Warehouse location) {
-    if (location == null) {
+  public WarehouseDto toDto(final Warehouse dto) {
+    if (dto == null) {
       return null;
     }
-    return WarehouseDto.builder().id(location.getId())
-        .name(location.getName())
-        .locationId(location.getLocationId())
+    return WarehouseDto.builder().id(dto.getId())
+        .name(dto.getName())
+        .locationId(dto.getLocationId())
         .build();
   }
 
-  public Warehouse toLocation(final WarehouseDto locationDto) {
-    if (locationDto == null) {
+  public Warehouse toDomain(final WarehouseDto dto) {
+    if (dto == null) {
       return null;
     }
-    final Warehouse location = new Warehouse();
-    location.setId(locationDto.getId());
-    location.setName(locationDto.getName());
-    location.setLocationId(locationDto.getLocationId());
-    return location;
+    final Warehouse item = new Warehouse();
+    item.setId(dto.id());
+    item.setName(dto.name());
+    item.setLocationId(dto.locationId());
+    return item;
   }
 }

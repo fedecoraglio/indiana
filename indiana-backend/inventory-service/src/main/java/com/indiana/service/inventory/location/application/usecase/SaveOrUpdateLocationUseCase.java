@@ -29,7 +29,7 @@ public class SaveOrUpdateLocationUseCase {
       final Location entity = locationMapper.toLocation(dto);
       final Location locationSaved = locationRepository.save(entity);
       log.info("Ending updating inventory. Id: {}", locationSaved.getId());
-      return locationMapper.toLocationDto(locationSaved);
+      return locationMapper.toDto(locationSaved);
     } catch (final LocationException e) {
       log.error("Error updating location", e);
       throw e;

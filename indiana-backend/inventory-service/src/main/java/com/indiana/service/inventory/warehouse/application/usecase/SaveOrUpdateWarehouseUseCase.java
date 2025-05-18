@@ -26,9 +26,9 @@ public class SaveOrUpdateWarehouseUseCase {
     try {
       log.info("Starting updating warehouse");
       saveOrUpdateWarehousePolicy.check(dto);
-      final Warehouse locationSaved = warehouseRepository.save(warehouseMapper.toLocation(dto));
+      final Warehouse locationSaved = warehouseRepository.save(warehouseMapper.toDomain(dto));
       log.info("Ending updating warehouse. Id: {}", locationSaved.getId());
-      return warehouseMapper.toLocationDto(locationSaved);
+      return warehouseMapper.toDto(locationSaved);
     } catch (final WarehouseException e) {
       log.error("Error updating location", e);
       throw e;

@@ -7,6 +7,7 @@ import com.indiana.service.inventory.location.infrastructure.controller.request.
 import com.indiana.service.inventory.location.infrastructure.controller.response.ListLocationResponse;
 import com.indiana.service.inventory.location.infrastructure.service.LocationService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -40,13 +41,19 @@ public class LocationController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<LocationDto> update(@PathVariable(name = "id") Long id,
+  public ResponseEntity<LocationDto> update(@PathVariable(name = "id") final Long id,
       @Valid @RequestBody final LocationRequest request) {
     log.info("Updating location: {}", request);
     final LocationDto dto = locationRequestConverter.convert(request);
     final LocationDto dtoToUpdate = new LocationDto(id, dto.getName(), dto.getAddress());
     final LocationDto result = locationService.saveOrUpdate(dtoToUpdate);
     return ResponseEntity.ok(result);
+  }
+
+  @PostMapping("by-ids")
+  public ResponseEntity<List<LocationDto>> getByIds(@RequestBody() final List<Long> ids) {
+    log.info("Getting locations by ids: {}", ids);
+    return ResponseEntity.ok(locationService.getAllByIds(ids));
   }
 
   @GetMapping("/{id}")

@@ -39,10 +39,19 @@ public class LocationControllerAdvice {
   @ResponseStatus(BAD_REQUEST)
   @ExceptionHandler(ProductInfraException.class)
   public ResponseEntity<ErrorResponse> handleInfraException(final LocationInfraException ex) {
-    log.error("Product infra error: {}", ex.getMessage());
+    log.error("Location infra error: {}", ex.getMessage());
     final ErrorResponse errorResponse = new ErrorResponse(
         ex.getLocationException().getType().getCode(),
         ex.getLocationException().getType().getMessage(), ex.getMessage(), BAD_REQUEST.value());
+    return ResponseEntity.status(BAD_REQUEST).body(errorResponse);
+  }
+
+  @ResponseStatus(BAD_REQUEST)
+  @ExceptionHandler(LocationException.class)
+  public ResponseEntity<ErrorResponse> handleLocationException(final LocationException ex) {
+    log.error("Location exception error: {}", ex.getMessage());
+    final ErrorResponse errorResponse = new ErrorResponse(ex.getType().getCode(),
+        ex.getType().getMessage(), ex.getMessage(), BAD_REQUEST.value());
     return ResponseEntity.status(BAD_REQUEST).body(errorResponse);
   }
 }

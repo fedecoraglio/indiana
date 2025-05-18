@@ -4,12 +4,14 @@ import com.indiana.service.inventory.location.application.dto.LocationDto;
 import com.indiana.service.inventory.location.application.exception.LocationException;
 import com.indiana.service.inventory.location.application.exception.LocationException.LocationExceptionType;
 import com.indiana.service.inventory.location.application.usecase.GetLocationByIdUseCase;
+import com.indiana.service.inventory.location.application.usecase.GetLocationsByIdsUseCase;
 import com.indiana.service.inventory.location.application.usecase.SaveOrUpdateLocationUseCase;
 import com.indiana.service.inventory.location.application.usecase.SearchLocationUseCase;
 import com.indiana.service.inventory.location.infrastructure.exception.LocationInfraException;
 import com.indiana.service.inventory.product.application.exception.ProductException;
 import com.indiana.service.inventory.product.application.sort.ProductSortBy;
 import com.indiana.service.inventory.product.infrastructure.exception.ProductInfraException;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ public class LocationService {
 
   private final SaveOrUpdateLocationUseCase createOrUpdateLocationUseCase;
   private final GetLocationByIdUseCase getLocationByIdUseCase;
+  private final GetLocationsByIdsUseCase getLocationsByIdsUseCase;
   private final SearchLocationUseCase searchLocationUseCase;
 
   public LocationDto saveOrUpdate(final LocationDto dto) {
@@ -38,6 +41,14 @@ public class LocationService {
   public LocationDto getById(final Long id) {
     try {
       return getLocationByIdUseCase.execute(id);
+    } catch (final LocationException exception) {
+      throw new LocationInfraException(exception);
+    }
+  }
+
+  public List<LocationDto> getAllByIds(final List<Long> ids) {
+    try {
+      return getLocationsByIdsUseCase.execute(ids);
     } catch (final LocationException exception) {
       throw new LocationInfraException(exception);
     }

@@ -33,7 +33,7 @@ public class SearchLocationUseCase {
       } else {
         page = locationPageableRepository.findByNameIgnoreCaseContaining(query, pageable);
       }
-      return page.map(locationMapper::toLocationDto);
+      return page.map(locationMapper::toDto);
     } catch (final LocationException e) {
       log.error("Error getting location", e);
       throw e;

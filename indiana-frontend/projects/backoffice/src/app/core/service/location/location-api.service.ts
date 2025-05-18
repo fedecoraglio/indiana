@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LocationListDto } from '../dto/location-list.dto';
-import { LocationFilterDto } from '../dto/location-filter.dto';
+import { LocationListDto } from '../../../feature/location/dto/location-list.dto';
+import { LocationFilterDto } from '../../../feature/location/dto/location-filter.dto';
 import { environment } from '../../../../environments/environment';
-import { LocationDto } from '../dto/location.dto';
+import { LocationDto } from '../../../feature/location/dto/location.dto';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class LocationApiService {
   private readonly http: HttpClient = inject(HttpClient);
 

@@ -6,14 +6,14 @@ import {
   Signal,
   ViewChild,
 } from '@angular/core';
-import { LocationService } from '../../../core/service/location/location.service';
+import { WarehouseService } from '../../../core/service/warehouse/warehouse.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, from, map, Subject, switchMap } from 'rxjs';
-import { LocationFormComponent } from '../form/location-form.component';
+import { filter, Subject, switchMap } from 'rxjs';
+import { WarehouseFormComponent } from '../form/warehouse-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LocationDto } from '../dto/location.dto';
-import { LocationApiService } from '../../../core/service/location/location-api.service';
+import { WarehouseDto } from '../dto/warehouse.dto';
+import { WarehouseApiService } from '../../../core/service/warehouse/warehouse-api.service';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -23,12 +23,12 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'indiana-backoffice-location-edit',
-  templateUrl: './location-edit.component.html',
-  providers: [LocationService, LocationApiService],
+  selector: 'indiana-backoffice-warehouse-edit',
+  templateUrl: './warehouse-edit.component.html',
+  providers: [WarehouseService, WarehouseApiService],
   standalone: true,
   imports: [
-    LocationFormComponent,
+    WarehouseFormComponent,
     MatButtonModule,
     MatDialogActions,
     MatDialogTitle,
@@ -36,26 +36,25 @@ import {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationEditComponent {
-  private readonly locationService = inject(LocationService);
+export class WarehouseEditComponent {
+  private readonly warehouseService = inject(WarehouseService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   readonly gotToList$ = new Subject<void>();
-  readonly isLoadingSignal = this.locationService.isLoadingSignal;
+  readonly isLoadingSignal = this.warehouseService.isLoadingSignal;
   readonly update$ = new Subject<void>();
   readonly title = 'Edit Location';
-  readonly locationSignal: Signal<LocationDto | null> =
-    this.locationService.locationSignal;
-  @ViewChild('form') form!: LocationFormComponent;
+  readonly locationSignal: Signal<WarehouseDto | null> = this.warehouseService.locationSignal;
+  @ViewChild('form') form!: WarehouseFormComponent;
 
   constructor(
-    public dialogRef: MatDialogRef<LocationEditComponent>,
+    public dialogRef: MatDialogRef<WarehouseEditComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       id: string;
     },
   ) {
-    this.locationService
+    this.warehouseService
       .getById$(data.id)
       .pipe(takeUntilDestroyed())
       .subscribe();
@@ -67,7 +66,7 @@ export class LocationEditComponent {
     this.update$
       .pipe(
         filter(() => this.form.isValid),
-        switchMap(() => this.locationService.update$(data.id, this.form.value)),
+        switchMap(() => this.warehouseService.update$(data.id, this.form.value)),
         takeUntilDestroyed(),
       )
       .subscribe(() => {

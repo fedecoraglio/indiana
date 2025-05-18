@@ -1,17 +1,17 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, EMPTY, finalize, Observable, take, tap } from 'rxjs';
-import { LocationListDto } from '../dto/location-list.dto';
-import { LocationApiService } from './location-api.service';
-import { LocationFilterDto } from '../dto/location-filter.dto';
-import { LocationDto } from '../dto/location.dto';
+import { WarehouseListDto } from '../../../feature/warehouse/dto/warehouse-list.dto';
+import { WarehouseApiService } from './warehouse-api.service';
+import { WarehouseFilterDto } from '../../../feature/warehouse/dto/warehouse-filter.dto';
+import { WarehouseDto } from '../../../feature/warehouse/dto/warehouse.dto';
 import { SnackBarService } from '../../../pattern/snack-bar/snack-bar.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
-export class LocationService {
-  private readonly locationApiService = inject(LocationApiService);
+export class WarehouseService {
+  private readonly locationApiService = inject(WarehouseApiService);
   private readonly snackBarService = inject(SnackBarService);
-  private readonly emptyLocationListDto: LocationListDto = {
+  private readonly emptyLocationListDto: WarehouseListDto = {
     totalElements: 0,
     totalPages: 0,
     pageSize: 0,
@@ -20,17 +20,17 @@ export class LocationService {
     content: [],
   };
   // Writable signal
-  private readonly _locationListSignal = signal<LocationListDto>(
+  private readonly _locationListSignal = signal<WarehouseListDto>(
     this.emptyLocationListDto,
   );
-  private readonly _locationSignal = signal<LocationDto | null>(null);
+  private readonly _locationSignal = signal<WarehouseDto | null>(null);
   private readonly _isLoadingSignal = signal<boolean>(false);
   // Immutable signal
   readonly locationListSignal = computed(() => this._locationListSignal());
   readonly locationSignal = computed(() => this._locationSignal() ?? null);
   readonly isLoadingSignal = computed(() => this._isLoadingSignal());
 
-  getAll$(dto: LocationFilterDto | null = null): Observable<LocationListDto> {
+  getAll$(dto: WarehouseFilterDto | null = null): Observable<WarehouseListDto> {
     return this.locationApiService.getAll$(dto).pipe(
       take(1),
       tap((dtoList) => {
@@ -45,11 +45,11 @@ export class LocationService {
     );
   }
 
-  save$(dto: LocationDto): Observable<LocationDto> {
+  save$(dto: WarehouseDto): Observable<WarehouseDto> {
     this._isLoadingSignal.set(true);
     return this.locationApiService.save$(dto).pipe(
       take(1),
-      tap((itemDto: LocationDto) => {
+      tap((itemDto: WarehouseDto) => {
         this._locationSignal.set(itemDto);
         this.snackBarService.showMessage(`${dto.name} has been saved`);
       }),
@@ -63,11 +63,11 @@ export class LocationService {
     );
   }
 
-  update$(id: string, dto: LocationDto): Observable<LocationDto> {
+  update$(id: string, dto: WarehouseDto): Observable<WarehouseDto> {
     this._isLoadingSignal.set(true);
     return this.locationApiService.update$(id, dto).pipe(
         take(1),
-        tap((dtoItem: LocationDto) => {
+        tap((dtoItem: WarehouseDto) => {
           this._locationSignal.set(dtoItem);
           this.snackBarService.showMessage(`${dto.name} has been updated`);
         }),
@@ -81,10 +81,10 @@ export class LocationService {
     );
   }
 
-  getById$(id: string): Observable<LocationDto> {
+  getById$(id: string): Observable<WarehouseDto> {
     return this.locationApiService.getById$(id).pipe(
       take(1),
-      tap((itemDto: LocationDto) => {
+      tap((itemDto: WarehouseDto) => {
         this._locationSignal.set(itemDto);
       }),
       catchError((e: HttpErrorResponse) => {

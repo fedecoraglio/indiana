@@ -23,7 +23,7 @@
       </a>
 
       <nav class="flex items-center gap-4">
-        @for (route of ['home', 'order', 'product','location']; track $index) {
+        @for (route of ['home', 'order', 'product','location', 'warehouse']; track $index) {
           <a
             [routerLink]="['/', route]"
             routerLinkActive

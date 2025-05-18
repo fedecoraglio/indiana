@@ -4,10 +4,10 @@ import {
   inject,
   ViewChild,
 } from '@angular/core';
-import { LocationService } from '../../../core/service/location/location.service';
+import { WarehouseService } from '../../../core/service/warehouse/warehouse.service';
 import { Router } from '@angular/router';
-import { filter, from, Subject, switchMap, tap } from 'rxjs';
-import { LocationFormComponent } from '../form/location-form.component';
+import { filter, Subject, switchMap } from 'rxjs';
+import { WarehouseFormComponent } from '../form/warehouse-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -16,15 +16,15 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { LocationApiService } from '../../../core/service/location/location-api.service';
+import { WarehouseApiService } from '../../../core/service/warehouse/warehouse-api.service';
 
 @Component({
-  selector: 'indiana-backoffice-location-create',
-  templateUrl: './location-create.component.html',
-  providers: [LocationService, LocationApiService],
+  selector: 'indiana-backoffice-warehouse-create',
+  templateUrl: './warehouse-create.component.html',
+  providers: [WarehouseService, WarehouseApiService],
   standalone: true,
   imports: [
-    LocationFormComponent,
+    WarehouseFormComponent,
     MatButtonModule,
     MatDialogTitle,
     MatDialogActions,
@@ -32,15 +32,15 @@ import { LocationApiService } from '../../../core/service/location/location-api.
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationCreateComponent {
-  private readonly locationService = inject(LocationService);
+export class WarehouseCreateComponent {
+  private readonly locationService = inject(WarehouseService);
   private readonly router = inject(Router);
   readonly create$ = new Subject<void>();
   readonly gotToList$ = new Subject<void>();
   readonly isLoadingSignal = this.locationService.isLoadingSignal;
-  @ViewChild('form') form!: LocationFormComponent;
+  @ViewChild('form') form!: WarehouseFormComponent;
 
-  constructor(public dialogRef: MatDialogRef<LocationCreateComponent>) {
+  constructor(public dialogRef: MatDialogRef<WarehouseCreateComponent>) {
     this.gotToList$.pipe(takeUntilDestroyed()).subscribe(() => {
       this.dialogRef.close({ shouldReload: true });
     });

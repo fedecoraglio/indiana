@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { LocationService } from './service/location.service';
-import { LocationApiService } from './service/location-api.service';
+import { LocationService } from '../../core/service/location/location.service';
+import { LocationApiService } from '../../core/service/location/location-api.service';
 import { LocationComponent } from './location.component';
 import { LocationListComponent } from './list/location-list.component';
 

@@ -1,5 +1,6 @@
 package com.indiana.service.inventory.warehouse.infrastructure.controller;
 
+import com.indiana.service.inventory.warehouse.application.dto.WarehouseDetailDto;
 import com.indiana.service.inventory.warehouse.application.dto.WarehouseDto;
 import com.indiana.service.inventory.warehouse.application.sort.WarehouseSortBy;
 import com.indiana.service.inventory.warehouse.infrastructure.controller.convert.WarehouseRequestConverter;
@@ -42,15 +43,15 @@ public class WarehouseController {
       @Valid @RequestBody final WarehouseRequest request) {
     log.info("Updating warehouse: {}", request);
     final WarehouseDto dto = warehouseRequestConverter.convert(request);
-    final WarehouseDto dtoToUpdate = new WarehouseDto(id, dto.getName(), dto.getLocationId());
+    final WarehouseDto dtoToUpdate = new WarehouseDto(id, dto.name(), dto.locationId());
     final WarehouseDto result = warehouseService.saveOrUpdate(dtoToUpdate);
     return ResponseEntity.ok(result);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<WarehouseDto> getById(@PathVariable(name = "id") final Long id) {
+  public ResponseEntity<WarehouseDetailDto> getById(@PathVariable(name = "id") final Long id) {
     log.info("Getting warehouse: {}", id);
-    final WarehouseDto dto = warehouseService.getById(id);
+    final WarehouseDetailDto dto = warehouseService.getById(id);
     if (dto == null) {
       return ResponseEntity.notFound().build();
     }
@@ -65,7 +66,7 @@ public class WarehouseController {
       @RequestParam(value = "sortBy", required = false, defaultValue = "id") final String sortBy,
       @RequestParam(value = "sortOrder", required = false) final String sortOrder) {
     log.info("Searching warehouses: {}", query);
-    final Page<WarehouseDto> result = warehouseService.search(query, page, size,
+    final Page<WarehouseDetailDto> result = warehouseService.search(query, page, size,
         WarehouseSortBy.fromValue(sortBy).getValue(), sortOrder);
     final ListWarehouseResponse response = ListWarehouseResponse.builder()
         .totalElements(result.getTotalElements())

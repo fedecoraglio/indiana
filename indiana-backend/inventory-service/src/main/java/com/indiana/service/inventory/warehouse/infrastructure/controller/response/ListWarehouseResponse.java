@@ -1,5 +1,6 @@
 package com.indiana.service.inventory.warehouse.infrastructure.controller.response;
 
+import com.indiana.service.inventory.warehouse.application.dto.WarehouseDetailDto;
 import com.indiana.service.inventory.warehouse.application.dto.WarehouseDto;
 import java.util.List;
 import lombok.Builder;
@@ -14,6 +15,6 @@ public class ListWarehouseResponse {
   Integer pageSize;
   Integer page;
   Integer numberOfElements;
-  List<WarehouseDto> content;
+  List<WarehouseDetailDto> content;
 
 }
