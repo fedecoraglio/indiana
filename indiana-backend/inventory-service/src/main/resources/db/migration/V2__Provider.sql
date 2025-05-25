@@ -1,0 +1,8 @@
+CREATE TABLE providers
+(
+    pro_id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    pro_name       VARCHAR(100) NOT NULL,
+    pro_address    VARCHAR(200),
+    pro_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    pro_updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

@@ -1,10 +1,10 @@
 package com.indiana.service.inventory.location.infrastructure.controller;
 
+import com.indiana.service.inventory.common.response.ListResponse;
 import com.indiana.service.inventory.location.application.dto.LocationDto;
 import com.indiana.service.inventory.location.application.sort.LocationSortBy;
 import com.indiana.service.inventory.location.infrastructure.controller.convert.LocationRequestConverter;
 import com.indiana.service.inventory.location.infrastructure.controller.request.LocationRequest;
-import com.indiana.service.inventory.location.infrastructure.controller.response.ListLocationResponse;
 import com.indiana.service.inventory.location.infrastructure.service.LocationService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -67,7 +67,7 @@ public class LocationController {
   }
 
   @GetMapping()
-  public ResponseEntity<ListLocationResponse> search(
+  public ResponseEntity<ListResponse<LocationDto>> search(
       @RequestParam(value = "query", required = false) final String query,
       @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
       @RequestParam(value = "pageSize", required = false, defaultValue = "15") final Integer size,
@@ -76,14 +76,7 @@ public class LocationController {
     log.info("Searching product: {}", query);
     final Page<LocationDto> result = locationService.search(query, page, size,
         LocationSortBy.fromValue(sortBy).getValue(), sortOrder);
-    final ListLocationResponse response = ListLocationResponse.builder()
-        .totalElements(result.getTotalElements())
-        .totalPages(result.getTotalPages())
-        .pageSize(result.getSize())
-        .page(result.getNumber())
-        .numberOfElements(result.getNumberOfElements())
-        .content(result.getContent())
-        .build();
+    final ListResponse<LocationDto> response = ListResponse.toListResponse(result);
     return ResponseEntity.ok(response);
   }
 }

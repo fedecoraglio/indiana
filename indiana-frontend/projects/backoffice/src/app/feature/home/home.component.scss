@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+.mat-icon {
+  width: auto !important;
+  height: auto !important;
+  line-height: 1 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

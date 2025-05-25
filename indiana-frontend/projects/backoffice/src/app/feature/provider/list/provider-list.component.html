@@ -1,0 +1,13 @@
+<div class="flex flex-row justify-between">
+  <div class="text-2xl">Provider List</div>
+  <button mat-flat-button color="primary" (click)="showCreateModal()">Create</button>
+</div>
+<div class="w-full pt-5">
+  <indiana-backoffice-provider-list-table
+    [listItem]="listSignal()"
+    (filterEvent)="onSelected($event)"
+    (editEvent)="showEditModal($event)"
+    (viewEvent)="showViewModal($event)"
+  >
+  </indiana-backoffice-provider-list-table>
+</div>

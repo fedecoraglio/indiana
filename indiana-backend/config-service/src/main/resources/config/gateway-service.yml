@@ -1,42 +1,44 @@
 server:
   servlet:
-    context-path: /
+    context-path: /inventories
   port: 8060
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8061/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 10
+      lease-expiration-duration-in-seconds: 30
 
 logging:
   pattern:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){blue} %clr([%X{traceId:-},%X{spanId:-}]){cyan} %clr(${LOG_LEVEL_PATTERN:-%5p}) %m%n"
 
+
 springdoc:
-  enable-native-support: true
-  api-docs:
-    enabled: true
   swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-    config-url: /v3/api-docs/swagger-config
     urls:
-      - name: API Gateway Service
-        url: /v3/api-docs
-        primaryName: API Gateway Service
-      - name: Inventory Service
-        url: /inventory-service/v3/api-docs
-        primaryName: inventory-service
+      - name: inventory-service
+        url: /inventories/v3/api-docs
+    path: /swagger-ui.html
 
 spring:
+  application:
+    name: indiana-gateway
   output:
     ansi:
       enabled: always
   cloud:
+    discovery:
+      enabled: true
     gateway:
       discovery:
         locator:
           enabled: true
+          lowerCaseServiceId: true
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials RETAIN_UNIQUE
         - AddResponseHeader=Access-Control-Allow-Origin, "http://localhost:4200"
@@ -61,7 +63,12 @@ spring:
         - id: inventory-service
           uri: lb://inventory-service
           predicates:
-            - Path=/inventories/** , /inventory-service/v3/api-docs
+            - Path=/inventories/**
+        # Swagger-specific routes
+        - id: inventory-service-swagger
+          uri: lb://inventory-service
+          predicates:
+            - Path=/inventory-service/v3/api-docs
           filters:
             - StripPrefix=1
 

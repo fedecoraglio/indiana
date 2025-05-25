@@ -23,6 +23,7 @@ public class GatewayServiceApplication {
   public RouteLocator routeLocator(RouteLocatorBuilder builder) {
     return builder.routes().route(
         r -> r.path("/inventory-service/v3/api-docs").and().method(HttpMethod.GET)
-            .uri("lb://inventory-service")).build();
+            .uri("lb://inventory-service"))
+        .build();
   }
 }

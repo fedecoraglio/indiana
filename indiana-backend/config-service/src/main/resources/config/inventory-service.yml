@@ -1,14 +1,19 @@
 server:
   servlet:
-    context-path: /
+    context-path: /inventories
   port: 0
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8061/eureka/
+    register-with-eureka: true
+    fetch-registry: true
   instance:
     instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
 
 logging:
   pattern:
@@ -39,13 +44,10 @@ openapi:
   service:
     title: inventory-service doc
     version: 1.0.0
-    url: http://localhost:8060
+    url: http://localhost:8060/inventories
 
 springdoc:
   api-docs:
-    path: /inventory-service/v3/api-docs
+    path: /v3/api-docs
   swagger-ui:
-    path: /inventory-service/swagger-ui.html
-    default-produces-media-type: application/json
-    default-consumes-media-type: application/json
-    paths-to-match: /inventories/**
+    path: /swagger-ui.html

@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadChildren: () => import('./feature/warehouse/warehouse.routes')
   },
   {
+    path: 'provider',
+    loadChildren: () => import('./feature/provider/provider.routes')
+  },
+  {
     path: '**',
     redirectTo: ''
   }
