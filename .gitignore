@@ -33,4 +33,6 @@ build/
 .vscode/
 
 /indiana-backend/inventory-api/target/
+/indiana-backend-go/.env
+/indiana-backend-go/.idea
 

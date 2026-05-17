@@ -1,0 +1,17 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: indiana-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: indiana
+      MYSQL_USER: indiana_user
+      MYSQL_PASSWORD: indiana_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
